@@ -1,0 +1,11 @@
+data = 'from(bucket: "ABCD") |> range(start: -1h)'; %ABCD Being the bucket name
+body = matlab.net.http.MessageBody(data);
+contentTypeField = matlab.net.http.field.ContentTypeField('application/vnd.flux'); %Flux being the field name
+acceptField = matlab.net.http.field.AcceptField('application/csv')
+method = matlab.net.http.RequestMethod.POST;
+auth = matlab.net.http.field.GenericField('Authorization','Token ImZX1uYRmhNTUeU7m4tyHoDiTy39Ao4NV2-9IyzfgOSvEQN7zYMpzuPNqyFAk6RaC330-W7yEPR2SiMaQhIFAQ=='); %ImZX1... being the token of bucket
+header = [auth acceptField contentTypeField]; 
+request = matlab.net.http.RequestMessage(method,header,body);
+
+uri = matlab.net.URI('https://XYZ.de:8086/api/v2/query?org=ABC'); %XYZ being the https, ABC being the key
+response = send(request,uri)
